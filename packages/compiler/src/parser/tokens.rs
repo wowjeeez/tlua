@@ -9,7 +9,6 @@ pub struct Token {
     pub kind: Tokens,
     pub span: Span,
 }
-
 #[derive(PartialEq, Debug, Clone)]
 pub enum Tokens {
     And,
@@ -29,6 +28,7 @@ pub enum Tokens {
     Implements,
     Arrow,
     Switch,
+    Qmark,
     For,
     Function,
     Goto,

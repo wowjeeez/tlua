@@ -1,3 +1,4 @@
+use std::fmt::Write;
 use crate::parser::tokens::{Comment, Span, Token, Tokens};
 
 #[derive(Debug)]
@@ -556,6 +557,14 @@ impl Iterator for Lexer {
                         span: Span { start, end },
                     })
                 }
+                '?' => {
+                    self.incr_cursor();
+                    let end = self.cursor;
+                    Some(Token {
+                        kind: Tokens::Qmark,
+                        span: Span { start, end },
+                    })
+                }
                 unknown => {
                     self.incr_cursor();
                     let end = self.cursor;
@@ -569,18 +578,4 @@ impl Iterator for Lexer {
             None
         }
     }
-}
-
-#[test]
-fn parse() {
-    let lex: Vec<_> = Lexer::new(r#"
-        local func = () => hello
-        class WOW
-        ----comment
-            public method()
-                print("wow")
-            end
-        end
-    "#).collect();
-    dbg!(lex);
 }
